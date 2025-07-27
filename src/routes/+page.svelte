@@ -15,6 +15,7 @@
 <section class="content">
     <div class="row">
         <a href="/">Here</a>
+        <a href="/now">Now</a>
     </div>
 </section>
 
