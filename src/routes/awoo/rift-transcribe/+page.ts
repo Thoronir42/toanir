@@ -48,4 +48,5 @@ const buttons = [
     {natural: 'exclamation', label: '!'},
     {natural: ' ', label: ''},
     {natural: 'question', label: '?'},
+    {natural: 'back', label: 'back'},
 ]
