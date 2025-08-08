@@ -1,0 +1,6 @@
+@use "./colours";
+@use "./spacing";
+
+a {
+    color: var(--color-primary);
+}

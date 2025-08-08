@@ -7,3 +7,22 @@ body {
 section.hero {
     min-height: 80vh;
 }
+
+section.content {
+    max-width: 60ch;
+    margin: 0 auto;
+}
+
+.container {
+    max-width: 60ch;
+    margin: 0 auto;
+    padding: 0 0.5rem;
+}
+
+:is(h1, h2, h3, h4, h5, h6) {
+    margin: 0;
+
+    + .subtitle {
+        margin-block-start: 0.2em;
+    }
+}

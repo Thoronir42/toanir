@@ -1,0 +1,7 @@
+:root {
+    --color-primary-hsl: 42 100% 50%;
+    --color-primary: hsl(var(--color-primary-hsl));
+
+    --color-primary-light-hsl: 42 100% 80%;
+    --color-primary-light: hsl(var(--color-primary-light-hsl));
+}
