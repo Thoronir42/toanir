@@ -103,6 +103,19 @@ body {
     > [role="separator"]:nth-of-type(3) + button {
         margin-inline-start: 1.5rem;
     }
+
+    &[data-state] {
+        button {
+            scale: 0;
+            transition: scale 0.15s cubic-bezier(.5,2.5,0,.65);
+            transition-delay: calc(var(--i) * 0.0075s);
+        }
+    }
+    &[data-state="ready"] {
+        button {
+            scale: 1;
+        }
+    }
 }
 [name="message"] {
     margin-block-start: 1rem;

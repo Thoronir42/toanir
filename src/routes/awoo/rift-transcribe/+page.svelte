@@ -32,8 +32,8 @@
         return `/awoo/symbols/rift/${(button.file || button.natural + '.png')}`
     }
     function formatStyle(button: typeof data.buttons[0], i?: number) {
-        if (!button.style) return undefined;
-        return Object.entries(button.style)
+        if (!button.style && typeof i === "undefined") return undefined;
+        return Object.entries(button.style || {})
             .map(([key, value]) => `--${key}: ${value};`)
             .join(' ')
             + (i ? `--i: ${i};` :  '')
@@ -72,14 +72,14 @@
     onMount(async () => {
         keyImageInverse = await inverseImageUrl(keyImageHref)
         
-        buttons.forEach((button) => {
-            if (!button.href) return;
+        // buttons.forEach((button) => {
+        //     if (!button.href) return;
 
-            const image = new Image()
-            image.onload = () => button.state = 'ready'
-            image.onerror = () => button.state = 'error'
-            image.src = button.href
-        })
+        //     const image = new Image()
+        //     image.onload = () => button.state = 'ready'
+        //     image.onerror = () => button.state = 'error'
+        //     image.src = button.href
+        // })
 
         const styleEl = document.createElement("style");
         styleEl.id = "transcriber-keys";
@@ -98,7 +98,7 @@
 </script>
 
 <div class="container transcriber">
-    <h1>Rift transcriber v0.9</h1>
+    <h1>Rift transcriber v1.0</h1>
     <div class="controls radio-2">
         {#each data.modes as mode}
         <label>
@@ -110,7 +110,7 @@
         </label>
         {/each}
     </div>
-    <div class="keyboard flex" data-mode={data.mode}>
+    <div class="keyboard flex" data-mode={data.mode} data-state={keyImageInverse ? 'ready' : 'loading'}>
         {#each buttons as button, i}
         {#if button.natural}
         <button class="key" aria-label={button.natural} data-key={button.natural}
@@ -161,7 +161,7 @@
     <p>Brought to you by the Society of Interdimensional Sciences</p>
     <img src="/awoo/sois.jpg" alt="Society of Interdimensional Sciences logo" width="1084" height="618" />
     <p style="opacity: 0.4; margin-block-start: 1rem;">
-        Note: The glyphs are as caught in the wild. Should you have better quality, please send them over to
+        Should you have innovation opportunity ideas, please send them over to
         <a target="_blank" href="https://t.me/Toanir">Toanir</a>.
     </p>
 </div>
