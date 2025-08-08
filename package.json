@@ -40,6 +40,8 @@
 		"vitest": "^3.0.0"
 	},
 	"dependencies": {
+		"@editorjs/editorjs": "^2.30.8",
+		"@editorjs/header": "^2.8.8",
 		"bootstrap": "^5.3.4",
 		"jsonwebtoken": "^9.0.2",
 		"normalize.css": "^8.0.1",
