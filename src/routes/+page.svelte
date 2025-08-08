@@ -12,6 +12,11 @@
         {/each}
     </div>
 </section>
+<section class="content">
+    <div class="row">
+        <a href="/">Here</a>
+    </div>
+</section>
 
 <style lang="scss">
 section#landing {
