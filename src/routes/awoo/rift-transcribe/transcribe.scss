@@ -1,6 +1,7 @@
 :root {
     --color-input: hsl(275, 59%, 90%);
     --color-section: hsla(0, 0%, 67%, 0.533);
+    --color-highlight: #f98917;
 }
 
 html {
@@ -11,9 +12,12 @@ body {
     background-color: hsl(275, 59%, 28%);
     color: hsl(30, 95%, 53%);
 }
+a {
+    color: dodgerblue;
+}
 
 :is(input, textarea, button) {
-    accent-color: #f98917;
+    accent-color: var(--color-highlight);
     background-color: var(--color-input);
 }
 
@@ -23,7 +27,7 @@ body {
 }
 
 .controls {
-    padding: 0.25rem 1rem;
+    padding: 0.5rem 1rem;
     display: flex;
     justify-content: center;
     gap: 1rem;
@@ -34,7 +38,7 @@ body {
         flex-direction: column;
         align-items: center;
 
-        padding: 0.25rem;
+        padding: 0.5rem;
 
         background-color: var(--color-section);
     }
@@ -56,6 +60,7 @@ body {
     margin: 0 auto;
     text-align: center;
     background-color: var(--color-section);
+    border: 2px solid var(--color-highlight);
     padding: 0.2rem;
 
     &.flex {
@@ -122,6 +127,10 @@ body {
     width: 100%;
     resize: vertical;
     min-height: 10rem;
+    border: 2px solid var(--color-highlight);
+}
+hr {
+    border-color: var(--color-highlight);
 }
 
 .encoded {

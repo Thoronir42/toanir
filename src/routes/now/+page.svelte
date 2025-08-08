@@ -4,7 +4,7 @@
 
 <div class="container">
     <h1>Now?</h1>
-    <p class="subtitle">
+    <p>
         The what's up and latest of various life stages of the juicy feline. This page is inspired by
         the <a href="https://nownownow.com/about" target="_blank">nownownow</a> project.
     </p>

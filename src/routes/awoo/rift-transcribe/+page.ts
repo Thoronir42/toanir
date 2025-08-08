@@ -7,7 +7,7 @@ export const load: PageLoad = ({url}) => {
             {name: "encode", label: "Encoder"},
         ],
         buttons,
-        mode: url.searchParams.get('mode') === 'decode' ? 'decode' as const : 'encode' as const,
+        mode: url.searchParams.get('mode') === 'encode' ? 'encode' as const : 'decode' as const,
     }
 }
 

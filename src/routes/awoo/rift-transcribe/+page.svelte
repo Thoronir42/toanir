@@ -1,5 +1,4 @@
 <script lang="ts">
-    import "reboot.css/dist/reboot.css";
     import "./transcribe.scss";
     import { goto } from "$app/navigation";
     import type { PageData } from "./$types";
@@ -98,7 +97,8 @@
 </script>
 
 <div class="container transcriber">
-    <h1>Rift transcriber v1.0</h1>
+    <h1>Rift transcriber</h1>
+    <div class="subtitle">v1.1</div>
     <div class="controls radio-2">
         {#each data.modes as mode}
         <label>
@@ -160,9 +160,9 @@
 <div class="credits">
     <p>Brought to you by the Society of Interdimensional Sciences</p>
     <img src="/awoo/sois.jpg" alt="Society of Interdimensional Sciences logo" width="1084" height="618" />
-    <p style="opacity: 0.4; margin-block-start: 1rem;">
-        Should you have innovation opportunity ideas, please send them over to
-        <a target="_blank" href="https://t.me/Toanir">Toanir</a>.
+    <p>
+        Feel free to discuss or copy the transcriber schematics at
+        <a href="https://github.com/Thoronir42/toanir/tree/main/src/routes/awoo/rift-transcribe" target="_blank">GitHub</a>!
     </p>
 </div>
 
