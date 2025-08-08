@@ -1,0 +1,195 @@
+:root {
+    --color-input: hsl(275, 59%, 90%);
+    --color-section: hsla(0, 0%, 67%, 0.533);
+}
+
+html {
+    font-size: 20px;
+}
+
+body {
+    background-color: hsl(275, 59%, 28%);
+    color: hsl(30, 95%, 53%);
+}
+
+:is(input, textarea, button) {
+    accent-color: #f98917;
+    background-color: var(--color-input);
+}
+
+.transcriber {
+    // --bg: url("/awoo/fire.jpeg"); --bg-w: 256px; --bg-h: 194px;
+    --bg: url("/awoo/flame.jpg"); --bg-w: 995px; --bg-h: 996px;
+}
+
+.controls {
+    padding: 0.25rem 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+
+    label {
+        width: fit-content;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        padding: 0.25rem;
+
+        background-color: var(--color-section);
+    }
+
+    &.radio-2 {
+        > label {
+            gap: 0.5rem;
+        }
+        > label:first-child {
+            flex-direction: row-reverse;
+        }
+        > label:last-child {
+            flex-direction: row;
+        }
+    }
+}
+.keyboard {
+    width: fit-content;
+    margin: 0 auto;
+    text-align: center;
+    background-color: var(--color-section);
+    padding: 0.2rem;
+
+    &.flex {
+        display: inline-flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        > [role="separator"] {
+            width: 100%;
+        }
+    }
+
+    > button {
+        margin: 0.1rem;
+        width: 1.75rem;
+        height: 1.75rem;
+        padding: 0;
+        line-height: 0;
+        font-weight: bold;
+
+        color: white;
+        background: var(--bg);
+        background-attachment: fixed;
+        background-repeat: repeat;
+
+        animation:
+            bgUp 30s forwards infinite linear,
+            bgSway 30s forwards infinite ease-in-out
+            ;
+        animation-delay: calc(var(--i) * -16.23s), calc(var(--i) * -16.23s);
+
+        > img {
+            vertical-align: baseline;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 1;
+            overflow: hidden;
+        }
+
+        &[data-key=" "] {
+            width: 6rem;
+        }
+    }
+
+    > [role="separator"]:nth-of-type(3) + button {
+        margin-inline-start: 1.5rem;
+    }
+}
+[name="message"] {
+    margin-block-start: 1rem;
+    width: 100%;
+    resize: vertical;
+    min-height: 10rem;
+}
+
+.encoded {
+    background-color: var(--color-section);
+    > .key {
+        display: inline-block;
+        width: 2em;
+        height: 2em;
+
+        > img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        &[style*="--x"] {
+            padding: 0.25rem;
+
+            span {
+                background: var(--bg);
+                background-attachment: fixed;
+                background-repeat: repeat;
+                mask-image: var(--key-image-inverse);
+
+                animation:
+                    bgUp 30s forwards infinite ease-in-out,
+                    darken 1.5s forwards ease-in-out
+                    ;
+                animation-delay:
+                    calc(var(--i) * -16.23s),
+                    0
+                    ;
+            }
+        }
+    }
+}
+
+:is(.keyboard[data-mode="decode"], .encoded) .key[style*="--x"] {
+    > span {
+        display: block;
+        width: 100%;
+        height: 100%;
+
+        mask-mode: luminance;
+        mask-image: var(--key-image);
+        mask-position: calc(var(--x) * 1px) calc(var(--y) * 1px);
+        mask-size: calc(var(--w) * 1px) calc(var(--h) * 1px);
+
+        background-color: currentColor;
+    }
+}
+
+
+.credits {
+    margin-block-end: 2rem;
+    img {
+        display: block;
+        max-width: min(80vw, 100%);
+        height: auto;
+        margin: 0 auto;
+        border: 4px groove #f98917;
+    }
+}
+
+@keyframes bgUp {
+    0%   { background-position-y: var(--bg-h); }
+    100% { background-position-y: 0; }
+}
+@keyframes bgSway {
+    0% { background-position-x: 0px; }
+    10% { background-position-x: 10px; }
+    40% { background-position-x: -30px; }
+    60% { background-position-x: -70px; }
+    80% { background-position-x: 20px; }
+    100% { background-position-x: 0px; }
+}
+@keyframes darken {
+    0% {
+        filter: brightness(1);
+    }
+    100% {
+        filter: brightness(0);
+    }
+}
