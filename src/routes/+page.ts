@@ -1,3 +1,4 @@
+import { env } from "$env/dynamic/public";
 import { weightedDistribution } from "$lib/rand";
 import type { PageLoad } from "./$types"
 
@@ -13,6 +14,6 @@ export const load: PageLoad = ({url}) => {
 
     return {
         mood: mood.name,
-        name: "Toanir"
+        name: env.PUBLIC_SITE_OWNER
     }
 }

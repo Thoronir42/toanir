@@ -2,7 +2,10 @@
 
 @use "./theme/theme";
 
+@use "./layouting/forms.scss";
 @use "./layouting/page.scss";
+
+@use "./components/tile.scss";
 
 
 html {

@@ -1,0 +1,20 @@
+.tile {
+    --border-width: 2px;
+    border: var(--border-width) solid var(--color-primary-light);
+
+    &.-rounded {
+        border-radius: calc(var(--br-card) + var(--border-width));
+    }
+}
+
+:is(.tile .hero-align, .hero-align) > .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    place-self: start end;
+    border-top-right-radius: var(--br-card);
+    border-bottom-left-radius: 0.25em;
+    padding: var(--br-card);
+
+    background-color: #3333;
+}
