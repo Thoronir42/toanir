@@ -1,13 +1,7 @@
-import type { TokenContent } from "../routes/auth/jwt.server";
+import { env } from "$env/dynamic/public";
+import type { TokenContent } from "./jwt.server";
+import type { TokenClaim } from "./token.svelte";
 
-export const defaultClaims: UserAuthTokenData = {
-    iss: "",
-    sub: "",
-    aud: "Toanir",
-    iat: 0,
-    exp: 0,
-    permissions: [],
-}
 
 export function verifyUser(token: TokenContent|null): UserAuthTokenData | undefined {
     if (!token?.valid) return
@@ -28,6 +22,17 @@ export function isUserLike(subject: unknown): subject is UserAuthTokenData {
 
     return true
 }
+
+export function getDefaultClaims(locals: App.Locals, opts: {iat: Date, exp: Date}): TokenClaim[] {
+    return [
+        {name: "iss", value: locals.user?.sub || "", readonly: true},
+        {name: "aud", value: env.PUBLIC_SITE_OWNER, readonly: true},
+        {name: "iat", value: opts.iat.getTime(), readonly: true},
+        {name: "exp", value: opts.exp.getTime(), readonly: true},
+        {name: "permissions", value: []},
+    ]
+}
+
 
 export type UserAuthTokenData = {
     iss: string,

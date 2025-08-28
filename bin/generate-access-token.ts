@@ -1,6 +1,6 @@
 import "dotenv-safe/config.js";
 import jsonwebtoken from "jsonwebtoken";
-import { defaultClaims, UserAuthTokenData } from "../src/lib/auth";
+import { UserAuthTokenData } from "../src/lib/auth";
 
 const [,, sub, jti, permissionsStr] = process.argv;
 if (!sub) {
@@ -20,14 +20,15 @@ const permissions = (permissionsStr || '').split(',').filter(Boolean)
 
 const payload: UserAuthTokenData = {
     iss: 'toanir-cli',
-    aud: defaultClaims.aud,
+    aud: process.env.PUBLIC_SITE_OWNER!,
     sub,
     iat: iat.getTime(),
     exp: exp.getTime(),
     permissions,
     jti,
 }
-console.log(payload)
+
+process.stderr.write(JSON.stringify(payload) + "\n")
 
 const token = jsonwebtoken.sign(payload, process.env.AUTH_JWT_SECRET!);
-console.log(token)
+process.stdout.write(token + "\n")

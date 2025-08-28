@@ -1,95 +1,61 @@
 <script lang="ts">
-    import { onMount } from "svelte";
-    import QrScanner from 'qr-scanner';
+    import FlipContent from "$lib/components/FlipContent.svelte";
 
-    import type { TokenContent } from "../jwt.server";
+    import { TokenCheck } from "$lib/token.svelte";
+    import Scanner from "$lib/components/Scanner.svelte";
 
-    let status = $state<'idle'|'busy' |'error'>('idle')
-    let tokenContent = $state<null|TokenContent>(null)
+    let scanner = $state<Scanner>()
 
-    let iat = $derived(tokenContent?.payload?.iat ? new Date(tokenContent?.payload?.iat) : null)
-    let exp = $derived(tokenContent?.payload?.exp ? new Date(tokenContent?.payload?.exp) : null)
-
-    async function checkCode(e: SubmitEvent) {
-        e.preventDefault()
-        if (!(e.target instanceof HTMLFormElement)) {
-            console.error(e.target, 'not a form')
-            status = "error"
-            return
-        }
-
-        const formData = new FormData(e.target)
-        
-        if (status !== "idle") {
-            return
-        }
-
-        tokenContent = null
-        status = 'busy'
-        try {
-            const response = await fetch(new URL(window.location.toString()), {
-                method: "POST",
-                body: JSON.stringify(Object.fromEntries(formData.entries())),
-            })
-            tokenContent = await response.json()
-
-        } finally {
-            status = 'idle'
-        }
-    }
-
-    let videoEl = $state<HTMLVideoElement>()
-    let scanner: QrScanner|null = null
-    onMount(() => {
-        if (!videoEl) {
-            return
-        }
-
-        scanner = new QrScanner(videoEl, (result) => {
-            const textarea = document.querySelector('[name="code"]') as HTMLTextAreaElement
-            if (textarea) textarea.value = result.data
-            document.querySelector("button")?.click()
-            scanner?.stop()
-        }, {})
-    })
+    const tokenCheck = new TokenCheck({
+        onSuccess: () => {
+            scanner?.reset()
+        },
+    });
 </script>
-<a href="generate">generate</a>
-<h1>Verify <small>{status}</small></h1>
 
-<div class="row">
-    <div class="col">
-        <form method="POST" onsubmit={checkCode}>
-            <label for="code">Code</label>
-            <textarea id="code" name="code"></textarea>
-            <button type="submit">Check</button>
-        </form>
-    </div>
-    <div class="col">
-        <div class="scanner">
-            <button onclick={() => scanner?.start()}>Start</button>
-            <button onclick={() => scanner?.stop()}>Stop</button>
-            <video bind:this={videoEl}></video>
+<div class="container block-flow">
+    <div class="heading">
+        <h1>Verify</h1>
+        <div class="actions">
+            <a href="generate">generate</a>
         </div>
     </div>
+
+    <FlipContent
+        active={tokenCheck.status === "done" ? "back" : "front"}
+        class="tile -rounded"
+    >
+        {#snippet front()}
+            <Scanner onScan={(result) => tokenCheck.run(result.data)} data-side="front" />
+        {/snippet}
+        {#snippet back()}
+            <div class="hero-align" data-side="back">
+                <div class="actions">
+                    <button onclick={() => tokenCheck.reset()}>Reset</button>
+                </div>
+                {#if tokenCheck.contentParsed}
+                    <table>
+                        <tbody>
+                            {#each tokenCheck.contentParsed.entries as entry (entry.label)}
+                                <tr>
+                                    <th>{entry.label}</th><td>{entry.value}</td>
+                                </tr>
+                            {/each}
+                        </tbody>
+                    </table>
+                    {#if tokenCheck.contentParsed.rest}
+                        <code
+                            style="background-color: #efefef; border: 1px solid #ddd;"
+                        >
+                            <pre>{JSON.stringify(
+                                    tokenCheck.contentParsed.rest,
+                                    null,
+                                    2,
+                                )}</pre>
+                        </code>
+                    {/if}
+                {/if}
+            </div>
+        {/snippet}
+    </FlipContent>
 </div>
-
-
-{#if tokenContent}
-<table>
-    <tbody>
-    <tr>
-        <th>Valid</th><td>{tokenContent.valid}</td>
-    </tr>
-    <tr>
-        <th>IAT</th><td>{iat?.toISOString()}</td>
-    </tr>
-    <tr>
-        <th>EXP</th><td>{exp?.toISOString()}</td>
-    </tr>
-    </tbody>
-</table>
-<code style="background-color: #efefef; border: 1px solid #ddd;">
-    <hr>
-    <pre>{JSON.stringify(tokenContent.payload, null, 2)}</pre>
-</code>
-{/if}

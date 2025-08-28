@@ -1,7 +1,9 @@
 body {
     font-family: 'Nunito', sans-serif;
 
-    min-height: 100vh;
+    @media screen {
+        min-height: 100vh;
+    }
 }
 
 section.hero {
@@ -19,11 +21,59 @@ section.content {
     padding: 0 0.5rem;
 }
 
+.hero-align {
+    display: grid;
+    place-items: center;
+
+    > * {
+        grid-area: 1/1;
+    }
+}
+
 :is(h1, h2, h3, h4, h5, h6) {
     margin-block-end: 0;
 
     + .subtitle {
         margin-block-start: -0.2em;
         font-weight: 100;
+    }
+}
+
+.heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-block-end: 0.5rem;
+    
+    > :is(h1, h2, h3, h4, h5, h6) {
+        margin: unset;
+    }
+
+    .actions {
+        margin-inline-start: auto;
+    }
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.block-flow {
+    > .heading {
+        &:first-child {
+            margin-block-start: 1rem;
+        }
+    }
+}
+
+@media print {
+    .no-print {
+        display: none !important;
+    }
+
+    .print-contents {
+        display: contents !important;
     }
 }

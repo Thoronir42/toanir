@@ -1,5 +1,5 @@
 import type { Handle } from "@sveltejs/kit";
-import jwtServer from "./routes/auth/jwt.server";
+import jwtServer from "$lib/jwt.server";
 import { verifyUser } from "$lib/auth";
 
 export const handle: Handle = ({event, resolve}) => {

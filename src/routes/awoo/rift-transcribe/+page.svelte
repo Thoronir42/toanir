@@ -3,6 +3,7 @@
     import { goto } from "$app/navigation";
     import type { PageData } from "./$types";
     import { onMount } from "svelte";
+    import { copyToClipboard } from "$lib/browser";
 
 
     const {data}: {data: PageData} = $props()
@@ -22,9 +23,6 @@
             return
         }
         message += button.label || button.natural
-    }
-    function copyMessage() {
-        navigator.clipboard.writeText(message)
     }
     function buttonToImage(button: typeof data.buttons[0]): string|null {
         if (button.file === null || button.natural === null) return null
@@ -136,7 +134,7 @@
 <textarea name="message" bind:value={message}></textarea>
 {#if data.mode === 'decode'}
 <div class="controls">
-    <button onclick={copyMessage}>Copy message</button>
+    <button onclick={() => copyToClipboard(message)}>Copy message</button>
 </div>
 {:else}
 <div class="encoded">

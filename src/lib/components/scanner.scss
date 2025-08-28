@@ -1,0 +1,39 @@
+.scanner {    
+    width: 100%;
+
+    display: grid;
+    overflow: hidden;
+
+    > * {
+        grid-area: 1 / 1;
+    }
+
+
+    video {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4/3;
+        place-self: stretch;
+        object-fit: cover;
+
+        border-radius: var(--br-card);
+    }
+
+    .actions {
+        z-index: 5;
+    }
+
+    .manual-drawer {
+        padding: 0.5rem;
+        place-self: end stretch;
+        background-color: #3333;
+
+        transition: translate 0.2s ease-in-out;
+
+        &[aria-expanded="false"] {
+            translate: 0 100%;
+        }
+
+        z-index: 5;
+    }
+}

@@ -1,0 +1,41 @@
+.flip-content {
+    --flip-duration: 0.4s;
+    --flip-transition: transform var(--flip-duration) ease-in-out; 
+
+    display: grid;
+    transition: var(--flip-transition);
+
+    > * {
+        grid-area: 1 / 1;
+    }
+
+    [data-side] {
+        min-width: 100%;
+        min-height: 100%;
+        transition: z-index var(--flip-duration) ease-in-out;
+    }
+
+    [data-side="front"] {
+        z-index: 2;
+    }
+    [data-side="back"] {
+        transform: rotateY(-180deg);
+        z-index: 1;
+    }
+
+    &[data-show="back"] {
+        transform: rotateY(180deg);
+
+        [data-side="front"] { z-index: 1; }
+        [data-side="back"] { z-index: 2; }
+    }
+
+    &.tile {
+        background-color: #fff;
+
+        [data-side] {
+            background-color: inherit;
+            border-radius: var(--br-card);
+        }
+    }
+}

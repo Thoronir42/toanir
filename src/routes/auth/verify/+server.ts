@@ -1,5 +1,5 @@
 import { json } from "@sveltejs/kit";
-import jwtServer from "../jwt.server";
+import jwtServer from "$lib/jwt.server";
 import type { RequestHandler } from "./$types";
 
 export const POST: RequestHandler = async ({params, request}) => {
